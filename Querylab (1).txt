@@ -1,0 +1,56 @@
+A. select distinct(dept_name) from instructor;
+B. Select name From instructor where dept_name = 'History'; 
+C. Select instructor.name, instructor.id From instructor, department where instructor.dept_name =department.dept_name and department.budget > 95000 ;
+D. Select name, salary from instructor where dept_name ='Comp. Sci.' and salary >= 55000; 
+E. Select instructor.name, course.title from instructor JOIN course ON instructor.dept_name= course.dept_name where instructor.dept_name = course.dept_name; 
+F.select * from instructor where salary >=(select max(salary) from instructor where dept_name =  'Comp. Sci.');
+G.select name from instructor where salary >=(select min(salary) from instructor where dept_name =  'Biology');
+H.select dept_name from department where building like '%Watson%';
+I.select dept_name from instructor order by name asc;
+J.select name from instructor where salary between 500 and 65000;
+K.select course_id from takes where (semester='Fall' and year='2009')union select course_id from takes where (semester='Spring' and year='2010')
+L.select course_id from takes where (semester='Fall' and year='2009')INTERSECT select course_id from takes where (semester='Spring' and year='2010');
+M.select course_id from takes where (semester='Fall' and year='2009')EXCEPT select course_id from takes where (semester='Spring' and year='2010');
+N.select name from instructor where salary='';
+O.select course_id from section where (semester='Fall' and year='2009') UNION select course_id from section where (semester='Spring' and year='2010');
+P.select course_id from section where (semester='Fall' and year='2009') Except select course_id from section where (semester='Spring' and year='2010');
+/*q*/
+SELECT COUNT(DISTINCT takes.ID) FROM takes
+WHERE course_id, sec_id, semester, "year" IN
+	(SELECT course_id, sec_id, semester, "year" FROM teaches
+	WHERE ID = 10101)
+
+SELECT COUNT(DISTINCT takes.ID) 
+FROM takes INNER JOIN teaches 
+	ON teaches.course_id = takes.course_id
+	AND teaches.sec_id = takes.sec_id
+	AND teaches.semester = takes.semester
+	AND teaches."year" = takes."year"
+WHERE teaches.ID = 10101
+
+r) select name
+from instructor
+where salary>SOME( select salary from instructor where dept_name='Biology'
+
+
+
+s) select name
+from instructor
+where salary>ALL(
+select salary
+from instructor
+where dept_name='Biology'
+);
+
+t) select course.title
+from course, section
+where course.course_id=section.course_id and (section.semester='Fall ' and section.year='2009' and  section.semester='Spring' and section.year='2010')
+s
+u) select name
+from student 
+where dept_name='Biology'
+
+v) select course_id,count(course_id) as MOST_FREQUENT
+from takes
+group by(course_id)
+order by count(course_id);
